@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GameJam 5 - The painting chud"
-run/main_scene="uid://i47rsvd7oiar"
+run/main_scene="uid://dr7oy8ilqd712"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://Assets/icon.svg"
 

@@ -1,13 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://i47rsvd7oiar"]
+[gd_scene load_steps=13 format=3 uid="uid://i47rsvd7oiar"]
 
 [ext_resource type="Script" uid="uid://wirpn7imrbdx" path="res://Scripts/score_label.gd" id="1_q1whg"]
 [ext_resource type="Texture2D" uid="uid://deqtrf0e20ogq" path="res://Assets/Sprites/Mall.png" id="2_02ptt"]
 [ext_resource type="Shader" uid="uid://dfthepqndvcll" path="res://Assets/Materials/SadJuices.gdshader" id="2_pwjc4"]
-[ext_resource type="Script" uid="uid://6xa2unkk6dvd" path="res://Scenes/PaintPosConventer.gd" id="3_e7274"]
+[ext_resource type="Script" uid="uid://6xa2unkk6dvd" path="res://Scripts/GameManager.gd" id="3_e7274"]
 [ext_resource type="PackedScene" uid="uid://cfkuy76dpih7p" path="res://Scenes/playerScene.tscn" id="4_77qla"]
 [ext_resource type="Script" uid="uid://drxjg2atoes7a" path="res://Scripts/paint_canvas.gd" id="5_e7274"]
 [ext_resource type="PackedScene" uid="uid://d0sr245h8un" path="res://Scenes/Jaintor.tscn" id="5_pwjc4"]
-[ext_resource type="Script" uid="uid://ce88bkus5af6e" path="res://Scenes/clean_timer.gd" id="7_uoo1u"]
+[ext_resource type="Script" uid="uid://ce88bkus5af6e" path="res://Scripts/clean_timer.gd" id="7_uoo1u"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_77qla"]
 viewport_path = NodePath("Mall_Floor/SubViewportContainer/SubViewport")
@@ -17,14 +17,15 @@ resource_local_to_scene = true
 shader = ExtResource("2_pwjc4")
 shader_parameter/mask_texture = SubResource("ViewportTexture_77qla")
 
+[sub_resource type="LabelSettings" id="LabelSettings_uoo1u"]
+font_size = 32
+shadow_color = Color(1, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_wuan6"]
+font_size = 32
+shadow_color = Color(1, 0, 0, 1)
+
 [node name="Mall" type="Node2D"]
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="ScoreLabel" type="Label" parent="CanvasLayer"]
-offset_right = 40.0
-offset_bottom = 23.0
-script = ExtResource("1_q1whg")
 
 [node name="Mall_Floor" type="Sprite2D" parent="." node_paths=PackedStringArray("paint_canvas")]
 material = SubResource("ShaderMaterial_e7274")
@@ -68,5 +69,29 @@ script = ExtResource("7_uoo1u")
 
 [node name="Player" parent="." instance=ExtResource("4_77qla")]
 position = Vector2(31, 0)
+
+[node name="Level_Timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+offset_left = 31.0
+offset_top = 12.0
+offset_right = 121.0
+offset_bottom = 106.0
+
+[node name="Level_Time_Lable" type="Label" parent="CanvasLayer/VBoxContainer"]
+texture_filter = 2
+layout_mode = 2
+text = "Timer"
+label_settings = SubResource("LabelSettings_uoo1u")
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+text = "Score"
+label_settings = SubResource("LabelSettings_wuan6")
+script = ExtResource("1_q1whg")
 
 [connection signal="timeout" from="jaintor/Clean_Label2/Clean_Timer" to="Mall_Floor" method="_on_clean_timer_timeout"]

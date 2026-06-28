@@ -1,12 +1,19 @@
 extends Sprite2D
 @export var paint_canvas : Node2D
+
 @onready var clean_timer: Timer = $"../jaintor/Clean_Label2/Clean_Timer"
 @onready var clean_label: Label = $"../jaintor/Clean_Label2"
+
+@onready var level_timer: Timer = $"../Level_Timer"
+@onready var level_time_lable: Label = $"../CanvasLayer/VBoxContainer/Level_Time_Lable"
+
 
 var Start_Button = false
 var currently_cleaning = false
 
 func _ready():
+	level_timer.start()
+	level_time_lable.text = str(int(level_timer.time_left))
 	
 	# trying to register the background globally so it can be found. BLEHHHH
 	# adding this to try aand keep the game from booting up to get reference to viewport.
@@ -45,6 +52,8 @@ func clean_paint_at_position(global_erase_pos: Vector2, erase_radius: float):
 	
 	
 func _process(delta):
+	level_time_lable.text = str(int(level_timer.time_left))
+	
 	if not clean_timer.is_stopped():
 		clean_label.text = str(int(clean_timer.time_left))
 	else:
