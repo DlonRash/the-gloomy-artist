@@ -12,8 +12,35 @@ func update_score():
 	
 	#instead of getting different vector 2 i can extra the number directly as floats
 	#var texture_size = background_sprite.texture.get_size()
+	
 	var tex_width: float = background_sprite.texture.get_width()
 	var tex_height: float = background_sprite.texture.get_height()
+	# // Grid System: Have to define a cell grid to contain postions based off the size of the texture 
+	#: come back here if i changed the background sprites and gets wonky
+	var cell_size: float = 124.0
+	
+	var grid_cols = ceil(tex_width / cell_size)
+	var grid_rows = ceil(tex_height / cell_size)
+	var total_cells: float = grid_cols * grid_rows
+	
+	# using a dictionary as a hash set to store unique painted cells cord
+	var unique_cells: Dictionary = {}
+	
+	# mapping every point in the drawing array to a unique grid cord
+	for pt in paint_canvas.points:
+		# keep points bounded within texture dimensions
+		var clamped_x = clamp(pt.x, 0.0, tex_width - 1.0)
+		var clamped_y = clamp(pt.y, 0.0, tex_width - 1.0)
+		
+		# identify which grid cell this point lands inside
+		var cell_x = int(clamped_x / cell_size)
+		var cell_y = int(clamped_y / cell_size)
+		
+		var cell_key = str(cell_x) + "_" + str(cell_y)
+		unique_cells[cell_key] = true
+		
+	
+	
 	# gotta grab the total pixel area of the background## UPDATE: grabs the new float variable 
 	#var total_area = texture_size.x * texture_size.y
 	var total_area = tex_width * tex_height
@@ -24,14 +51,18 @@ func update_score():
 		return
 	
 	var brush_size = paint_canvas.get("brush_size")  if "brush_size" in paint_canvas else 20.0
+	
 	## calculating approximate area covered by a single brush stroke circle
-	var stroke_area = PI * (brush_size * brush_size)
+	#var stroke_area = PI * (brush_size * brush_size)
+	
 	# multipy by toital points drawn
-	var total_drawn_points: float = paint_canvas.points.size()
-	var estimated_painted_area: float = total_drawn_points * stroke_area
+	#var total_drawn_points: float = paint_canvas.points.size()
+	#var estimated_painted_area: float = total_drawn_points * stroke_area
 	
 	# calculate percentagea (0 to 100)
-	var coverage_percentage = (estimated_painted_area / total_area) * 100.0
+	var unique_count: float = float(unique_cells.size())
+	var coverage_percentage: float = (unique_count / total_cells) * 100.0
+	
 	#var final_percentage = clamp(coverage_percentage, 0.0, 100.0)
 	# making the clamp myself to avoid errors with the godot built in one.
 	if coverage_percentage > 100.0:
@@ -47,9 +78,9 @@ func is_position_painted(global_pos: Vector2, radius: float = 15.0) -> bool:
 		#print("NO BACKGROUND HERE")
 		return false
 
-# need to find the paintcanvas child node.
-
+	# need to find the paintcanvas child node.
 	var paint_canvas = background_sprite.paint_canvas
+	
 	#if not paint_canvas:
 		#print("Cant find the sprite here!")
 		#return false
