@@ -52,14 +52,13 @@ func update_score():
 	
 	var brush_size = paint_canvas.get("brush_size")  if "brush_size" in paint_canvas else 20.0
 	
-	## calculating approximate area covered by a single brush stroke circle
+	## // Old code: calculating approximate area covered by a single brush stroke circle
 	#var stroke_area = PI * (brush_size * brush_size)
-	
 	# multipy by toital points drawn
 	#var total_drawn_points: float = paint_canvas.points.size()
 	#var estimated_painted_area: float = total_drawn_points * stroke_area
-	
 	# calculate percentagea (0 to 100)
+	
 	var unique_count: float = float(unique_cells.size())
 	var coverage_percentage: float = (unique_count / total_cells) * 100.0
 	

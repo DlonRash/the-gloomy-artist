@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://i47rsvd7oiar"]
+[gd_scene load_steps=11 format=3 uid="uid://i47rsvd7oiar"]
 
 [ext_resource type="Script" uid="uid://wirpn7imrbdx" path="res://Scripts/score_label.gd" id="1_q1whg"]
 [ext_resource type="Texture2D" uid="uid://deqtrf0e20ogq" path="res://Assets/Sprites/Mall.png" id="2_02ptt"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cfkuy76dpih7p" path="res://Scenes/playerScene.tscn" id="4_77qla"]
 [ext_resource type="Script" uid="uid://drxjg2atoes7a" path="res://Scripts/paint_canvas.gd" id="5_e7274"]
 [ext_resource type="PackedScene" uid="uid://d0sr245h8un" path="res://Scenes/Jaintor.tscn" id="5_pwjc4"]
+[ext_resource type="Script" uid="uid://ce88bkus5af6e" path="res://Scenes/clean_timer.gd" id="7_uoo1u"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_77qla"]
 viewport_path = NodePath("Mall_Floor/SubViewportContainer/SubViewport")
@@ -54,5 +55,18 @@ scale = Vector2(0.996268, 1.00694)
 SPEED = 10.0
 cleaning_radius = 100.0
 
+[node name="Clean_Label2" type="Label" parent="jaintor"]
+offset_left = -24.0
+offset_top = -118.0
+offset_right = 19.0
+offset_bottom = -75.0
+
+[node name="Clean_Timer" type="Timer" parent="jaintor/Clean_Label2"]
+wait_time = 5.0
+one_shot = true
+script = ExtResource("7_uoo1u")
+
 [node name="Player" parent="." instance=ExtResource("4_77qla")]
 position = Vector2(31, 0)
+
+[connection signal="timeout" from="jaintor/Clean_Label2/Clean_Timer" to="Mall_Floor" method="_on_clean_timer_timeout"]

@@ -18,5 +18,14 @@ func _physics_process(delta):
 			if is_on_paint:
 				current_state = AiState.CLEANING
 				print(" EWWWWW WHO MADE THIS SHIT GREY")
-	
+			
+		AiState.CLEANING:
+			velocity = Vector2.ZERO
+				
+			if PaintManager.background_sprite:
+					PaintManager.background_sprite.clean_paint_at_position(global_position, cleaning_radius)
+					
+			if not is_on_paint:
+				current_state = AiState.WANDER
+				print("Area clean! Resuming wander.")
 	move_and_slide()
