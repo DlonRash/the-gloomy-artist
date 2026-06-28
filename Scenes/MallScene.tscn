@@ -1,0 +1,58 @@
+[gd_scene load_steps=10 format=3 uid="uid://i47rsvd7oiar"]
+
+[ext_resource type="Script" uid="uid://wirpn7imrbdx" path="res://Scripts/score_label.gd" id="1_q1whg"]
+[ext_resource type="Texture2D" uid="uid://deqtrf0e20ogq" path="res://Assets/Sprites/Mall.png" id="2_02ptt"]
+[ext_resource type="Shader" uid="uid://dfthepqndvcll" path="res://Assets/Materials/SadJuices.gdshader" id="2_pwjc4"]
+[ext_resource type="Script" uid="uid://6xa2unkk6dvd" path="res://Scenes/PaintPosConventer.gd" id="3_e7274"]
+[ext_resource type="PackedScene" uid="uid://cfkuy76dpih7p" path="res://Scenes/playerScene.tscn" id="4_77qla"]
+[ext_resource type="Script" uid="uid://drxjg2atoes7a" path="res://Scripts/paint_canvas.gd" id="5_e7274"]
+[ext_resource type="PackedScene" uid="uid://d0sr245h8un" path="res://Scenes/Jaintor.tscn" id="5_pwjc4"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_77qla"]
+viewport_path = NodePath("Mall_Floor/SubViewportContainer/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e7274"]
+resource_local_to_scene = true
+shader = ExtResource("2_pwjc4")
+shader_parameter/mask_texture = SubResource("ViewportTexture_77qla")
+
+[node name="Mall" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("1_q1whg")
+
+[node name="Mall_Floor" type="Sprite2D" parent="." node_paths=PackedStringArray("paint_canvas")]
+material = SubResource("ShaderMaterial_e7274")
+position = Vector2(48, -12)
+scale = Vector2(0.996268, 1.00694)
+texture = ExtResource("2_02ptt")
+script = ExtResource("3_e7274")
+paint_canvas = NodePath("SubViewportContainer/SubViewport/PaintCanvas")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Mall_Floor"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -479.791
+offset_top = -270.125
+offset_right = 480.209
+offset_bottom = 269.875
+
+[node name="SubViewport" type="SubViewport" parent="Mall_Floor/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(960, 540)
+render_target_update_mode = 4
+
+[node name="PaintCanvas" type="Node2D" parent="Mall_Floor/SubViewportContainer/SubViewport"]
+script = ExtResource("5_e7274")
+
+[node name="jaintor" parent="." instance=ExtResource("5_pwjc4")]
+position = Vector2(183, -114)
+scale = Vector2(0.996268, 1.00694)
+SPEED = 10.0
+cleaning_radius = 100.0
+
+[node name="Player" parent="." instance=ExtResource("4_77qla")]
+position = Vector2(31, 0)

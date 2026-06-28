@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://d0sr245h8un"]
+
+[ext_resource type="Script" uid="uid://dildb707v43w6" path="res://Scripts/jaintorAi.gd" id="1_4ce8p"]
+[ext_resource type="Texture2D" uid="uid://dix8ocupsq7iq" path="res://Assets/icon.svg" id="1_fdiuq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ce8p"]
+
+[node name="jaintor" type="CharacterBody2D"]
+script = ExtResource("1_4ce8p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_4ce8p")
+
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+texture = ExtResource("1_fdiuq")
