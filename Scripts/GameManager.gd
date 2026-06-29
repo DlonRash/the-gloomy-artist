@@ -10,11 +10,12 @@ extends Sprite2D
 
 var Start_Button = false
 var currently_cleaning = false
+var game_over = false
 
 func _ready():
 	level_timer.start()
 	level_time_lable.text = str(int(level_timer.time_left))
-	
+	game_over = false
 	# trying to register the background globally so it can be found. BLEHHHH
 	# adding this to try aand keep the game from booting up to get reference to viewport.
 	
@@ -52,12 +53,22 @@ func clean_paint_at_position(global_erase_pos: Vector2, erase_radius: float):
 	
 	
 func _process(delta):
+	# ending the game and switcning to game over scene
+	if game_over:
+		#PaintManager.clear_references()
+		get_tree().change_scene_to_file("res://Scenes/game_over.tscn")
 	level_time_lable.text = str(int(level_timer.time_left))
 	
 	if not clean_timer.is_stopped():
 		clean_label.text = str(int(clean_timer.time_left))
 	else:
 		clean_label.text = "0"
+
+
+
 func _on_clean_timer_timeout():
 	Start_Button = true
 	
+
+func _on_level_timer_timeout():
+	game_over = true

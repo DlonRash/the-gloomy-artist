@@ -1,7 +1,15 @@
 extends Node
 var background_sprite: Sprite2D = null
 var current_score: int = 0
+func clear_references():
+	current_score = 0
+	background_sprite = null
 
+func reset_for_next_run():
+	current_score = 0
+	background_sprite = null
+	
+	
 func update_score():
 	var paint_canvas = background_sprite.paint_canvas
 	# make sure that the background is lowkirkly loaded
