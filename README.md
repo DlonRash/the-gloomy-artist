@@ -34,3 +34,4 @@ This repository contains the source project for the game jam release.
 - `Scenes/` — Godot scenes
 - `Scripts/` — Gameplay scripts
 - `project.godot` — Godot project configuration
+<img width="1873" height="1015" alt="image" src="https://github.com/user-attachments/assets/de383376-f9e9-4ab3-b7c5-dcee1568c7aa" />
